@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2c3e50">
+    <title>3 op een rij PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu-overlay" class="overlay">
+        <div class="menu-content">
+            <h1>3 op een rij</h1>
+            <p>Kies je speelmodus:</p>
+            <button onclick="startGame('cpu')">Tegen Computer</button>
+            <button onclick="startGame('pvp')">Tegen Vriend</button>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <h1>3 op een rij</h1>
+        <div id="scoreboard">
+            Rood: <span id="score-player">0</span> | <span id="label-opponent">CPU</span>: <span id="score-cpu">0</span>
+        </div>
+        <div id="status">Beurt: <span id="player-label" class="red">Laden...</span></div>
+        <div id="board"></div>
+        <div class="button-row">
+            <button id="reset-btn">Nieuw Spel</button>
+            <button onclick="resetScores()">Reset Score</button>
+            <button onclick="showMenu()">Menu</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
