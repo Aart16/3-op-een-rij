@@ -21,7 +21,9 @@ function init() {
     boardDiv.innerHTML = '';
     board = Array(SIZE * SIZE).fill(null);
     gameOver = false;
-    currentPlayer = 'red';
+    
+    // Willekeurig bepalen wie begint
+    currentPlayer = Math.random() < 0.5 ? 'red' : 'yellow';
     
     for (let i = 0; i < SIZE * SIZE; i++) {
         const cell = document.createElement('div');
@@ -30,7 +32,13 @@ function init() {
         cell.onclick = () => play(i);
         boardDiv.appendChild(cell);
     }
+    
     updateStatusLabel();
+
+    // Als de computer (yellow) willekeurig is gekozen om te beginnen:
+    if (gameMode === 'cpu' && currentPlayer === 'yellow') {
+        setTimeout(makeComputerMove, 600);
+    }
 }
 
 function play(index) {
