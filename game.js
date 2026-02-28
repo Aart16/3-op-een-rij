@@ -1,6 +1,6 @@
 const SIZE = 3;
 let board = [], currentPlayer = 'red', gameOver = false;
-let scores = { player: 0, cpu: 0 }, gameMode = 'cpu';
+let scores = { player: 0, cpu: 0, draw: 0 }; // 'draw' toegevoegd
 
 function startGame(mode) {
     gameMode = mode;
@@ -11,9 +11,10 @@ function startGame(mode) {
 
 function showMenu() { document.getElementById('menu-overlay').style.display = 'flex'; }
 function resetScores() {
-    scores = { player: 0, cpu: 0 };
+    scores = { player: 0, cpu: 0, draw: 0 };
     document.getElementById('score-player').innerText = "0";
     document.getElementById('score-cpu').innerText = "0";
+    document.getElementById('score-draw').innerText = "0"; // Reset de teller in de UI
 }
 
 function init() {
@@ -62,12 +63,12 @@ function makeMove(index, player) {
     } else if (board.every(cell => cell !== null)) {
         gameOver = true;
         setTimeout(() => alert("Gelijkspel!"), 100);
+    } else if (board.every(cell => cell !== null)) {
+        gameOver = true;
+        scores.draw++; // Verhoog de teller
+        document.getElementById('score-draw').innerText = scores.draw; // Update de UI
+        setTimeout(() => alert("Gelijkspel!"), 100);
     } else {
-        currentPlayer = (currentPlayer === 'red') ? 'yellow' : 'red';
-        updateStatusLabel();
-        if (gameMode === 'cpu' && currentPlayer === 'yellow') {
-            setTimeout(makeComputerMove, 600);
-        }
     }
 }
 
